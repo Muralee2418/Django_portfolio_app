@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page_content %}
+<div class="row">
+<h1 style="font-family:Lato thin; font-weight:10">Project Portfolio</h1>
+<div class="col"> 
+{% if user.is_authenticated %}
+<p>Hello {{user.username}}</p>
+<a href="accounts/logout">Logout</a>
+{% else %}
+<a href="accounts/register">Register</a>
+<a href="accounts/login">Login</a>
+{% endif %}
+</div> 
+</div>
+<hr>
+<br>
+<br>
+<div class="row">
+{% for project in projects %}
+<div class="col-md-4 emboss">
+        <div class="card mb-2">
+            <img class="card-img-top" src="{{ project.image.url }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ project.title }}</h5>
+                <p class="card-text">{{ project.description }}</p>
+                <a href="{% url 'project_details' project.pk %}"
+                   class="btn btn-primary">
+                    Read More
+                </a>
+                <a href="{% url 'likeprojects' project.pk %}"
+                   class="btn btn-primary">
+                    Like
+                </a>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+</div>
+{% endblock %}
